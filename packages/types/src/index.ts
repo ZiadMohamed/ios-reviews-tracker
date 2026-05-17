@@ -13,3 +13,8 @@ export interface Review {
   updatedAt: string;
   deletedAt: string | null;
 }
+
+export interface ReviewsResponse {
+  initializing: boolean;
+  reviews: Review[];
+}

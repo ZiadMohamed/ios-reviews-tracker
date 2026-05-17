@@ -7,7 +7,7 @@ import {
   POLL_INTERVAL_MS,
   REVIEW_WINDOW_MS,
 } from "./config";
-import { upsertReviews, softDeleteReviews } from "./store";
+import { upsertReviews, softDeleteReviews, setAppReady } from "./store";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -94,6 +94,7 @@ async function poll() {
   console.log("Started Polling");
   for (const app of apps) {
     await pollApp(app);
+    setAppReady(app.id);
     // sleep for BETWEEN_APPS_DELAY_MS between each app
     await new Promise((resolve) => setTimeout(resolve, BETWEEN_APPS_DELAY_MS));
   }

@@ -29,9 +29,11 @@ type SortBy = "recent" | "rating";
 export default function App() {
   const { data: apps, isFetching: isFetchingApps } = useApps();
   const [selectedAppId, setSelectedAppId] = useState<string | null | undefined>(undefined);
-  const { data: reviews, isFetching: isFetchingReviews } = useReviews(selectedAppId);
+  const { data: { reviews = [], initializing = true } = {}, isFetching: isFetchingReviews } =
+    useReviews(selectedAppId);
   const [sortBy, setSortBy] = useState<SortBy>("recent");
   const [page, setPage] = useState(1);
+  const isLoading = isFetchingApps || isFetchingReviews || initializing;
 
   useEffect(() => {
     if (apps && apps.length > 0) {
@@ -109,7 +111,7 @@ export default function App() {
 
         {/* Reviews */}
         <div className="space-y-4">
-          {isFetchingApps || isFetchingReviews ? (
+          {isLoading ? (
             [1, 2, 3].map((i) => <ReviewCardSkeleton key={i} />)
           ) : !pagedReviews.length ? (
             <p className="text-gray-400 text-sm">No reviews in the last 48 hours.</p>
@@ -124,7 +126,7 @@ export default function App() {
           )}
         </div>
 
-        {!isFetchingApps && !isFetchingReviews && totalPages > 1 && (
+        {!isLoading && totalPages > 1 && (
           <Pagination className="mt-8">
             <PaginationContent>
               <PaginationItem>

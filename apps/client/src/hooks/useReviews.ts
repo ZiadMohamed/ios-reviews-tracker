@@ -13,5 +13,10 @@ export function useReviews(appId: string | null | undefined) {
     queryKey: queryKeys.reviews(resolvedAppId),
     queryFn: () => getReviews({ appId: resolvedAppId }),
     enabled,
+    refetchInterval: (query) => {
+      // Keep polling every 3 seconds until first poll completes
+      if (query.state.data?.initializing) return 3000;
+      return false;
+    },
   });
 }

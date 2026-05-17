@@ -5,6 +5,15 @@ import { Review } from "@ios-reviews/types";
 const reviewsPath = path.join(__dirname, "reviews.json");
 
 let store: Record<string, Review[]> = {};
+const initializedApps = new Set<string>();
+
+export function setAppReady(appId: string): void {
+  initializedApps.add(appId);
+}
+
+export function getIsAppReady(appId: string): boolean {
+  return initializedApps.has(appId);
+}
 
 export function initStore(): void {
   if (!fs.existsSync(reviewsPath)) {

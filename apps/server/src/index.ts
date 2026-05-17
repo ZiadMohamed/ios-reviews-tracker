@@ -13,7 +13,10 @@ const clientOrigin = process.env.CLIENT_ORIGIN || "http://localhost:5173";
 
 app.use(cors({ origin: clientOrigin }));
 app.use(express.json());
-
+app.use("/api", (_req, res, next) => {
+  res.set("Cache-Control", "no-store");
+  next();
+});
 app.use("/api/apps", appsRouter);
 app.use("/api/reviews", reviewsRouter);
 

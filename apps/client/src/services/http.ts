@@ -10,6 +10,10 @@ export class ApiError extends Error {
 
 export async function fetchJson<T>(input: RequestInfo): Promise<T> {
   const response = await fetch(input);
+  if (response.status === 503) {
+    throw new ApiError(503, "Server initializing");
+  }
+
   if (!response.ok) {
     throw new ApiError(
       response.status,
