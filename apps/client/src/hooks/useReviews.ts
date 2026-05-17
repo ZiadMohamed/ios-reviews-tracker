@@ -7,7 +7,7 @@ import { queryKeys } from "./queryKeys";
 // appId: string   -> specific app id
 // Only enable the query for string or null cases
 export function useReviews(appId: string | null | undefined) {
-  const enabled = appId !== undefined;
+  const enabled = (typeof appId === "string" && appId?.trim().length > 0) || appId === null;
   const resolvedAppId = appId ?? null;
   return useQuery({
     queryKey: queryKeys.reviews(resolvedAppId),
