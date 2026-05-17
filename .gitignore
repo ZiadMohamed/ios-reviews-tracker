@@ -5,7 +5,19 @@ build
 *.log
 .env
 .env.local
+*.local
 .vite
 .turbo
 coverage
 apps/server/src/reviews.json
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Lint cache
+.eslintcache
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp

@@ -96,7 +96,7 @@ async function poll() {
     await pollApp(app);
     setAppReady(app.id);
     // sleep for BETWEEN_APPS_DELAY_MS between each app
-    await new Promise((resolve) => setTimeout(resolve, BETWEEN_APPS_DELAY_MS));
+    await sleep(BETWEEN_APPS_DELAY_MS);
   }
   console.log("Polling completed");
 }

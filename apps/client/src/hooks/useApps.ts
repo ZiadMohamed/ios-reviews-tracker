@@ -6,5 +6,6 @@ export function useApps() {
   return useQuery({
     queryKey: queryKeys.apps(),
     queryFn: () => getApps(),
+    refetchOnWindowFocus: false,
   });
 }

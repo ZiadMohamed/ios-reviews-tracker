@@ -23,6 +23,10 @@ export function initStore(): void {
     const data = fs.readFileSync(reviewsPath, "utf-8");
     store = JSON.parse(data);
     console.log("Loaded reviews from disk");
+    // Mark any app that already has data as ready
+    Object.keys(store).forEach((appId) => {
+      initializedApps.add(appId);
+    });
   } catch (error) {
     console.error("Failed to load reviews from disk:", error);
   }
