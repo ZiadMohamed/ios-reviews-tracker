@@ -32,7 +32,7 @@ const rssUrl = (appId: string, page: number) =>
   `https://itunes.apple.com/us/rss/customerreviews/id=${appId}/sortBy=mostRecent/page=${page}/json`;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function parseRssResponse(appId: string, data: any): Review[] {
+export function parseRssResponse(appId: string, data: any): Review[] {
   const rawEntries = data?.feed?.entry ?? [];
   // defensive code in case a single review is returned instead of an array
   const entries = Array.isArray(rawEntries) ? rawEntries : [rawEntries];
