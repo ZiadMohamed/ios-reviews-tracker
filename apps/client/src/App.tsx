@@ -1,33 +1,13 @@
-import { useEffect } from "react";
-import type { App as IOSApp, Review } from "@ios-reviews/types";
+import { useApps } from "@/hooks/useApps";
+import { useReviews } from "@/hooks/useReviews";
 
 export default function App() {
-  useEffect(() => {
-    let cancelled = false;
+  const appsQuery = useApps();
+  const firstAppId = appsQuery.data?.[0]?.id;
+  const reviewsQuery = useReviews(firstAppId);
 
-    (async () => {
-      try {
-        const appsRes = await fetch("/api/apps");
-        const apps: IOSApp[] = await appsRes.json();
-        if (cancelled) return;
-        console.log("[client] /api/apps →", apps);
-
-        const firstAppId = apps[0]?.id;
-        const reviewsRes = await fetch(
-          firstAppId ? `/api/reviews?appId=${encodeURIComponent(firstAppId)}` : "/api/reviews",
-        );
-        const reviews: Review[] = await reviewsRes.json();
-        if (cancelled) return;
-        console.log("[client] /api/reviews →", reviews);
-      } catch (err) {
-        if (!cancelled) console.error("[client] fetch failed", err);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  console.log("[client] /api/apps →", appsQuery.data);
+  console.log("[client] /api/reviews →", reviewsQuery.data);
 
   return <div data-testid="root" />;
 }
