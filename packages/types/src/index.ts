@@ -9,7 +9,7 @@ export interface Review {
   author: string;
   title: string;
   body: string;
-  score: number;
-  submittedAt: string;
+  score: number | null;
+  updatedAt: string;
   deletedAt: string | null;
 }

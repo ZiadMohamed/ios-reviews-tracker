@@ -4,6 +4,8 @@ import cors from "cors";
 
 import appsRouter from "./routes/apps";
 import reviewsRouter from "./routes/reviews";
+import { initStore } from "./store";
+import { startPolling } from "./poller";
 
 const app = express();
 const port = Number(process.env.PORT) || 3001;
@@ -19,6 +21,12 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
 
-app.listen(port, () => {
-  console.log(`[server] listening on http://localhost:${port} (CORS: ${clientOrigin})`);
-});
+async function main() {
+  await initStore();
+  startPolling();
+  app.listen(port, () => {
+    console.log(`[server] listening on http://localhost:${port} (CORS: ${clientOrigin})`);
+  });
+}
+
+main();

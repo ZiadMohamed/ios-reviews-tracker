@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from "express";
 import type { App } from "@ios-reviews/types";
-import { apps } from "../data/apps";
+import { apps } from "../config";
 
 const router = Router();
 
